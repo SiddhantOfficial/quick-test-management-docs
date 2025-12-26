@@ -4,53 +4,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quick Test Management - Support & Docs</title>
+    <title>Quick Test Management for Jira - Documentation & Support</title>
+    <meta name="description"
+        content="Documentation and support for Quick Test Management for Jira. Simple test case tracking built on Atlassian Forge.">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: #333;
-            max-width: 800px;
+            color: #172B4D;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
-            text-align: center;
+            background: #FAFBFC;
         }
 
         .hero {
-            background: #f4f5f7;
-            padding: 40px 20px;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #0052CC 0%, #0065FF 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 12px;
             margin-bottom: 40px;
+            text-align: center;
         }
 
-        h1 {
+        .hero h1 {
             margin-bottom: 10px;
-            color: #0052cc;
+            font-size: 2.2em;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 25px;
         }
 
         .btn {
             display: inline-block;
-            background: #0052cc;
-            color: white;
-            padding: 10px 20px;
+            background: white;
+            color: #0052CC;
+            padding: 12px 28px;
             text-decoration: none;
-            border-radius: 4px;
-            margin: 10px;
+            border-radius: 6px;
+            margin: 8px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        h2 {
+            color: #0052CC;
+            margin-top: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #DFE1E6;
         }
 
         .features {
-            text-align: left;
-            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
         }
 
-        .feature-item {
-            margin-bottom: 20px;
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #DFE1E6;
+        }
+
+        .feature-card .icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 10px 0;
+            color: #172B4D;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #6B778C;
+            font-size: 0.95em;
+        }
+
+        .forge-badge {
+            background: linear-gradient(135deg, #00875A 0%, #36B37E 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0;
+        }
+
+        .forge-badge h2 {
+            color: white;
+            border: none;
+            margin-top: 0;
+        }
+
+        .forge-badge ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .forge-badge li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .forge-badge li::before {
+            content: "✓";
+            background: white;
+            color: #00875A;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .getting-started {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #DFE1E6;
+        }
+
+        .getting-started ol {
+            padding-left: 20px;
+        }
+
+        .getting-started li {
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .support-section {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            margin: 40px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #DFE1E6;
+        }
+
+        .support-section h2 {
+            border: none;
+            margin-top: 0;
+        }
+
+        .contact-btn {
+            background: #0052CC;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .links-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .link-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #172B4D;
+            border: 1px solid #DFE1E6;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .link-card:hover {
+            border-color: #0052CC;
+            box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+        }
+
+        .link-card .icon {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        .faq {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #DFE1E6;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #DFE1E6;
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h3 {
+            margin: 0 0 10px 0;
+            color: #172B4D;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: #6B778C;
         }
 
         footer {
+            text-align: center;
             margin-top: 50px;
-            color: #666;
+            color: #6B778C;
             font-size: 0.9em;
+            padding: 20px;
+            border-top: 1px solid #DFE1E6;
+        }
+
+        footer a {
+            color: #0052CC;
         }
     </style>
 </head>
@@ -58,50 +258,124 @@
 <body>
     <div class="hero">
         <h1>Quick Test Management for Jira</h1>
-        <p>Simple, fast, and persistent test case tracking directly within your Jira issues.</p>
-        <a href="https://marketplace.atlassian.com/" class="btn">Get it on Marketplace</a>
+        <p>Simple, fast, and secure test case tracking directly within your Jira issues</p>
+        <a href="https://marketplace.atlassian.com/apps/1234567890/quick-test-management" class="btn">Get it on
+            Marketplace</a>
+        <a href="privacy-policy.html" class="btn btn-secondary">Privacy Policy</a>
     </div>
 
+    <h2>✨ Features</h2>
     <div class="features">
-        <h2>Features</h2>
-        <div class="feature-item">
-            <strong>✅ Quick Status Updates</strong><br>
-            Mark issues as Passed, Failed, Blocked, or Testing with a single click.
+        <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>One-Click Status Updates</h3>
+            <p>Mark tests as Passed, Failed, Blocked, or In Progress with a single click. No complex workflows.</p>
         </div>
-        <div class="feature-item">
-            <strong>📝 Notes & History</strong><br>
-            Add test notes and view a history of all test runs for auditability.
+        <div class="feature-card">
+            <div class="icon">📝</div>
+            <h3>Test Notes</h3>
+            <p>Add detailed observations, steps to reproduce, or failure reasons with auto-save functionality.</p>
         </div>
-        <div class="feature-item">
-            <strong>🔒 100% Secure – Built on Atlassian Forge</strong><br>
-            All data is stored exclusively within <strong>Atlassian Forge Storage</strong>. No external servers, no
-            third-party databases – your data never leaves Atlassian's secure cloud infrastructure.
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Audit History</h3>
+            <p>Track every status change with timestamps. Perfect for compliance and audit trails.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🎨</div>
+            <h3>Native Look & Feel</h3>
+            <p>Seamlessly integrates with Jira's UI. Supports both light and dark modes.</p>
         </div>
     </div>
 
-    <div class="features" style="margin-top: 40px; background: #e8f4ff; padding: 20px; border-radius: 8px;">
-        <h2>🏗️ Technology</h2>
-        <p style="text-align: left;">This app is a <strong>Forge-native application</strong> built entirely on
-            Atlassian's Forge platform:</p>
-        <ul style="text-align: left;">
-            <li><strong>Forge Storage</strong> – All test data is stored using Atlassian's encrypted key-value storage
-            </li>
-            <li><strong>Sandboxed Execution</strong> – App code runs in Atlassian's secure environment</li>
-            <li><strong>No External Calls</strong> – Zero data transmission outside Atlassian</li>
-            <li><strong>Enterprise Compliant</strong> – SOC 2, GDPR, and CCPA compliant via Atlassian</li>
+    <div class="forge-badge">
+        <h2>🏗️ Built on Atlassian Forge</h2>
+        <p>This app is a <strong>Forge-native application</strong>, meaning your data is always secure:</p>
+        <ul>
+            <li><strong>100% Atlassian Infrastructure</strong> – All data stored in Forge Storage, not on external
+                servers</li>
+            <li><strong>No External API Calls</strong> – Your data never leaves Atlassian's cloud</li>
+            <li><strong>Sandboxed Execution</strong> – App runs in Atlassian's isolated, secure environment</li>
+            <li><strong>Enterprise Compliant</strong> – Benefits from Atlassian's SOC 2, GDPR, and CCPA compliance</li>
+            <li><strong>Developer Has No Access</strong> – We cannot see or retrieve your stored data</li>
         </ul>
     </div>
 
-    <div class="support">
+    <h2>🚀 Getting Started</h2>
+    <div class="getting-started">
+        <ol>
+            <li><strong>Install the App</strong> – Get Quick Test Management from the Atlassian Marketplace and install
+                it on your Jira Cloud site.</li>
+            <li><strong>Open Any Issue</strong> – Navigate to any Jira issue where you want to track test status.</li>
+            <li><strong>Find the Panel</strong> – Look for "Quick Test Management" in the issue's side panel or context
+                menu.</li>
+            <li><strong>Set Status</strong> – Click on a status button (Pass, Fail, Blocked, In Progress) to update the
+                test state.</li>
+            <li><strong>Add Notes</strong> – Optionally add test notes. They auto-save as you type.</li>
+            <li><strong>View History</strong> – Expand the history section to see all previous status changes.</li>
+        </ol>
+    </div>
+
+    <h2>❓ Frequently Asked Questions</h2>
+    <div class="faq">
+        <div class="faq-item">
+            <h3>Where is my data stored?</h3>
+            <p>All data is stored exclusively in <strong>Atlassian Forge Storage</strong>, within Atlassian's secure
+                cloud infrastructure. We do not use any external servers or databases. Your data never leaves Atlassian.
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>Can the developer access my data?</h3>
+            <p>No. Forge's architecture ensures that app developers cannot access customer data. We have no ability to
+                view, retrieve, or access any data stored by this App in your Jira instance.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is this app GDPR compliant?</h3>
+            <p>Yes. Because we use Atlassian Forge Storage, your data benefits from Atlassian's enterprise-grade
+                compliance, including GDPR, CCPA, SOC 2, and ISO 27001.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I delete my data?</h3>
+            <p>You can use the "Reset" function in the App to clear test data for a specific issue. Uninstalling the App
+                will remove all app-specific data according to Atlassian's data retention policies.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is this app free?</h3>
+            <p>Yes! Quick Test Management is completely free for all team sizes. No hidden costs or premium tiers.</p>
+        </div>
+    </div>
+
+    <h2>🔗 Quick Links</h2>
+    <div class="links-section">
+        <a href="privacy-policy.html" class="link-card">
+            <div class="icon">🔒</div>
+            <strong>Privacy Policy</strong>
+        </a>
+        <a href="mailto:support@technicaldost.com" class="link-card">
+            <div class="icon">📧</div>
+            <strong>Contact Support</strong>
+        </a>
+        <a href="https://marketplace.atlassian.com/" class="link-card">
+            <div class="icon">🛒</div>
+            <strong>Marketplace Listing</strong>
+        </a>
+    </div>
+
+    <div class="support-section">
         <h2>Need Help?</h2>
-        <p>If you encounter any issues or have feature requests, please reach out.</p>
-        <a href="mailto:support@technicaldost.com" class="btn">Contact Support</a>
-        <br><br>
-        <a href="privacy-policy.html">Privacy Policy</a>
+        <p>If you encounter any issues, have feature requests, or need assistance, our support team is here to help.</p>
+        <a href="mailto:support@technicaldost.com" class="contact-btn">📧 Contact Support</a>
+        <p style="margin-top: 20px; color: #6B778C; font-size: 0.9em;">
+            For security-related issues, please email <a
+                href="mailto:security@technicaldost.com">security@technicaldost.com</a>
+        </p>
     </div>
 
     <footer>
-        &copy; 2025 Technical Dost. Built with Atlassian Forge.
+        <p>&copy; 2025 Technical Dost. All rights reserved.</p>
+        <p>Quick Test Management for Jira is not affiliated with or endorsed by Atlassian.</p>
+        <p>Built with ❤️ on Atlassian Forge</p>
+        <p><a href="privacy-policy.html">Privacy Policy</a></p>
     </footer>
 </body>
 

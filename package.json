@@ -1,0 +1,26 @@
+{
+    "name": "quick-test-cases",
+    "version": "1.0.0",
+    "description": "Simple test case tracking for Jira issues - Pass, Fail, or Blocked with notes",
+    "main": "src/index.js",
+    "scripts": {
+        "lint": "eslint src/",
+        "build": "echo 'No build step required'"
+    },
+    "dependencies": {
+        "@forge/api": "^4.0.0",
+        "@forge/resolver": "^1.6.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.0.0"
+    },
+    "keywords": [
+        "jira",
+        "forge",
+        "test-cases",
+        "qa",
+        "testing"
+    ],
+    "author": "Technical Dost",
+    "license": "MIT"
+}

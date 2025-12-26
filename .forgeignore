@@ -1,0 +1,28 @@
+# ignore node_modules everywhere
+node_modules/
+**/node_modules/
+static/node_modules/
+
+# ignore git
+.git/
+
+# ignore IDE files
+.idea/
+.vscode/
+
+# ignore OS files
+.DS_Store
+Thumbs.db
+
+# ignore source files (only need bundled)
+static/src/
+
+# ignore lock files
+static/package-lock.json
+package-lock.json
+
+# ignore docs folder (not needed for app runtime)
+docs/
+
+# ignore assets folder (not needed for app runtime)
+assets/

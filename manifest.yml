@@ -1,0 +1,33 @@
+modules:
+  jira:issueContext:
+    - key: quick-test-cases-panel
+      title: Quick Test Management
+      label: Test Status
+      icon: https://developer.atlassian.com/platform/forge/images/icons/issue-panel-icon.svg
+      resource: main
+      resolver:
+        function: resolver
+
+  function:
+    - key: resolver
+      handler: index.handler
+
+resources:
+  - key: main
+    path: static
+
+permissions:
+  scopes:
+    - storage:app
+  content:
+    styles:
+      - 'unsafe-inline'
+    scripts:
+      - 'unsafe-inline'
+
+app:
+  runtime:
+    name: nodejs22.x
+  id: ari:cloud:ecosystem::app/f747b6ce-539e-4ecb-821f-4439e5ee22b9
+  licensing:
+    enabled: true

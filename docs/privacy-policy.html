@@ -46,10 +46,22 @@
     <p><strong>Effective Date:</strong> December 26, 2025</p>
 
     <h2>1. Overview</h2>
-    <p>Quick Test Management for Jira ("the App") is a Forge app designed to help users track test statuses directly
-        within Jira issues. We value your privacy and are committed to protecting your data.</p>
+    <p>Quick Test Management for Jira ("the App") is a <strong>Forge-native application</strong> built entirely on
+        Atlassian's Forge platform. It is designed to help users track test statuses directly within Jira issues. We
+        value your privacy and are committed to protecting your data.</p>
 
-    <h2>2. Data Collection and Storage</h2>
+    <h2>2. Technology Platform</h2>
+    <p>This app is built using <strong>Atlassian Forge</strong>, Atlassian's next-generation cloud app development
+        platform. Forge apps run entirely within Atlassian's secure cloud infrastructure, ensuring:</p>
+    <ul>
+        <li><strong>No External Servers:</strong> The app does not connect to any third-party servers or external APIs.
+        </li>
+        <li><strong>Sandboxed Execution:</strong> All app code runs in Atlassian's secure, sandboxed environment.</li>
+        <li><strong>Native Integration:</strong> The app integrates directly with Jira using Atlassian's official APIs.
+        </li>
+    </ul>
+
+    <h2>3. Data Collection and Storage</h2>
     <p>The App stores the following data:</p>
     <ul>
         <li><strong>Test Status:</strong> The current status (Pass, Fail, Blocked, Untested, In Progress) of a test case
@@ -57,29 +69,57 @@
         <li><strong>Test Notes:</strong> Optional notes entered by the user regarding the test case.</li>
         <li><strong>History Logs:</strong> Timestamps and status changes for audit history.</li>
     </ul>
-    <p>All data is stored securely within <strong>Atlassian's Forge Storage</strong>. We do NOT maintain any external
-        servers or databases. Your data never leaves the Atlassian cloud environment.</p>
+    <p><strong>All data is stored exclusively within Atlassian Forge Storage</strong>, a secure, encrypted key-value
+        storage system managed entirely by Atlassian. Key points:</p>
+    <ul>
+        <li>✅ <strong>No external databases</strong> – We do NOT maintain any servers, databases, or storage outside of
+            Atlassian.</li>
+        <li>✅ <strong>Data residency</strong> – Your data remains within Atlassian's cloud infrastructure and is subject
+            to Atlassian's data residency policies.</li>
+        <li>✅ <strong>Encryption</strong> – All data in Forge Storage is encrypted at rest and in transit by Atlassian.
+        </li>
+        <li>✅ <strong>Isolation</strong> – Data is isolated per Jira instance; we cannot access data across different
+            customers.</li>
+    </ul>
 
-    <h2>3. Data Access</h2>
+    <h2>4. Data Access</h2>
     <p>The data stored by the App is accessible only to:</p>
     <ul>
         <li>Users with access to the specific Jira issue where the data was created.</li>
-        <li>The App's code running within your Jira instance.</li>
+        <li>The App's code running within your Jira instance (via Forge functions).</li>
     </ul>
-    <p>The developer (Technical Dost) does <strong>not</strong> have access to your stored data.</p>
+    <p><strong>Important:</strong> The developer (Technical Dost / Siditude Apps) does <strong>NOT</strong> have access
+        to your stored data. Forge's architecture ensures that customer data is never transmitted to or accessible by
+        app developers.</p>
 
-    <h2>4. GDPR and CCPA Compliance</h2>
-    <p>Since all data is stored within Atlassian's infrastructure, the App relies on Atlassian's compliance controls.
-        You have full control over your data:</p>
+    <h2>5. GDPR, CCPA, and Compliance</h2>
+    <p>Since all data is stored within Atlassian's Forge infrastructure, the App benefits from Atlassian's
+        enterprise-grade compliance controls. Atlassian Forge is:</p>
     <ul>
-        <li><strong>Right to Access:</strong> You can view all stored data directly in the App panel.</li>
-        <li><strong>Right to Deletion:</strong> Uninstalling the App or deleting the Jira issue will typically handle
-            data according to Atlassian's retention policies.</li>
+        <li>✅ SOC 2 Type II compliant</li>
+        <li>✅ GDPR compliant (data residency in applicable regions)</li>
+        <li>✅ CCPA compliant</li>
+    </ul>
+    <p>You have full control over your data:</p>
+    <ul>
+        <li><strong>Right to Access:</strong> You can view all stored data directly in the App panel on any Jira issue.
+        </li>
+        <li><strong>Right to Deletion:</strong> Uninstalling the App removes all app-specific data according to
+            Atlassian's Forge data retention policies.</li>
+        <li><strong>Right to Portability:</strong> Contact us if you need to export your test data.</li>
     </ul>
 
-    <h2>5. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at: <a
-            href="mailto:support@technicaldost.com">support@technicaldost.com</a></p>
+    <h2>6. Permissions Used</h2>
+    <p>This app requests minimal permissions:</p>
+    <ul>
+        <li><code>storage:app</code> – To save and retrieve test statuses, notes, and history using Forge Storage.</li>
+    </ul>
+    <p>We do not request access to user data, personal information, or any other Jira data beyond what is needed for the
+        app to function.</p>
+
+    <h2>7. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy or how your data is handled, please contact us at:<br>
+        📧 Email: <a href="mailto:support@technicaldost.com">support@technicaldost.com</a></p>
 
     <div class="footer">
         &copy; 2025 Technical Dost. All rights reserved.

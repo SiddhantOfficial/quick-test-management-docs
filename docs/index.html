@@ -284,7 +284,17 @@
         <div class="feature-card">
             <div class="icon">🎨</div>
             <h3>Native Look & Feel</h3>
-            <p>Seamlessly integrates with Jira's UI. Supports both light and dark modes.</p>
+            <p>Seamlessly integrates with Jira's UI. Follows your Jira light or dark theme automatically.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🔎</div>
+            <h3>Search Results with JQL</h3>
+            <p>Every result is searchable: <code>testStatus = failed</code> works in Jira search, filters and dashboards.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🛡️</div>
+            <h3>Permission-Aware</h3>
+            <p>Anyone who can view an issue sees its results; recording them needs Edit issue permission.</p>
         </div>
     </div>
 
@@ -307,12 +317,13 @@
             <li><strong>Install the App</strong> – Get Quick Test Management from the Atlassian Marketplace and install
                 it on your Jira Cloud site.</li>
             <li><strong>Open Any Issue</strong> – Navigate to any Jira issue where you want to track test status.</li>
-            <li><strong>Find the Panel</strong> – Look for "Quick Test Management" in the issue's side panel or context
-                menu.</li>
+            <li><strong>Find the Panel</strong> – Look for "Test Status" in the issue's right-hand details area.</li>
             <li><strong>Set Status</strong> – Click on a status button (Pass, Fail, Blocked, In Progress) to update the
                 test state.</li>
             <li><strong>Add Notes</strong> – Optionally add test notes. They auto-save as you type.</li>
-            <li><strong>View History</strong> – Expand the history section to see all previous status changes.</li>
+            <li><strong>View History</strong> – Expand the history section to see the last 10 test runs.</li>
+            <li><strong>Search by Result</strong> – In Jira search, use <code>testStatus = failed</code>,
+                <code>testStatus in (failed, blocked)</code> or <code>testStatusUpdated &gt;= -7d</code>.</li>
         </ol>
     </div>
 
@@ -320,9 +331,9 @@
     <div class="faq">
         <div class="faq-item">
             <h3>Where is my data stored?</h3>
-            <p>All data is stored exclusively in <strong>Atlassian Forge Storage</strong>, within Atlassian's secure
-                cloud infrastructure. We do not use any external servers or databases. Your data never leaves Atlassian.
-            </p>
+            <p>All data is stored in <strong>Atlassian Forge Storage</strong>, and the current result is also saved as a
+                Jira issue property so it can be searched with JQL. We do not use any external servers or databases.
+                Your data never leaves Atlassian.</p>
         </div>
         <div class="faq-item">
             <h3>Can the developer access my data?</h3>
@@ -336,12 +347,13 @@
         </div>
         <div class="faq-item">
             <h3>How do I delete my data?</h3>
-            <p>You can use the "Reset" function in the App to clear test data for a specific issue. Uninstalling the App
-                will remove all app-specific data according to Atlassian's data retention policies.</p>
+            <p>Use "Reset" in the App to clear the notes and set an issue back to untested. Uninstalling the App
+                removes app storage according to Atlassian's data retention policies.</p>
         </div>
         <div class="faq-item">
-            <h3>Is this app free?</h3>
-            <p>Yes! Quick Test Management is completely free for all team sizes. No hidden costs or premium tiers.</p>
+            <h3>How much does it cost?</h3>
+            <p>It's free for teams of up to 10 users. Larger teams pay a small per-user monthly price, shown on the
+                Marketplace listing, with a free trial.</p>
         </div>
     </div>
 

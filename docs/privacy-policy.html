@@ -126,7 +126,7 @@
         <p><strong>App Name:</strong> Quick Test Management for Jira</p>
         <p><strong>Developer:</strong> Siddhant Sharma</p>
         <p><strong>Effective Date:</strong> December 26, 2025</p>
-        <p><strong>Last Updated:</strong> December 26, 2025</p>
+        <p><strong>Last Updated:</strong> September 27, 2026</p>
         <p><strong>Version:</strong> 1.0</p>
     </div>
 
@@ -207,7 +207,13 @@
             <td>To associate test data with the correct Jira issue</td>
             <td>Atlassian Forge Storage</td>
         </tr>
+        <tr>
+            <td>Current Test Status and Time</td>
+            <td>Copied to a Jira issue property so issues can be searched with JQL (for example <code>testStatus = failed</code>)</td>
+            <td>The Jira issue itself (Atlassian)</td>
+        </tr>
     </table>
+    <p>The App uses the Jira REST API, acting as the signed-in user, only to check whether that user can edit the issue and to write the issue property above. It does not store user account IDs or any other personal data.</p>
 
     <h3>4.2 What Data We Do NOT Collect</h3>
     <ul>
@@ -220,7 +226,7 @@
 
     <h3>4.3 Data Storage</h3>
     <div class="security-box">
-        <strong>All data is stored exclusively within Atlassian Forge Storage.</strong>
+        <strong>All data is stored exclusively within Atlassian: Forge Storage and the Jira issue property described above.</strong>
         <ul>
             <li>✅ <strong>No external databases</strong> – We do NOT maintain any servers or databases outside Atlassian
             </li>

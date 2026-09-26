@@ -1,6 +1,5 @@
 /* Quick Test Cases - Light Theme (Matches Jira UI) */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
     /* Jira-matching light palette */
@@ -52,7 +51,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     font-size: 14px;
@@ -499,4 +498,9 @@ body {
     .action-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+/* Hidden until app.js shows them (no inline styles, so no unsafe-inline CSP) */
+#main-content,
+#error-state {
+    display: none;
 }

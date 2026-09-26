@@ -1,5 +1,5 @@
 import Resolver from '@forge/resolver';
-import { storage } from '@forge/api';
+import { kvs } from '@forge/kvs';
 
 const resolver = new Resolver();
 
@@ -14,34 +14,71 @@ const TEST_STATUSES = {
     IN_PROGRESS: 'in_progress'
 };
 
+const MAX_NOTES_LENGTH = 5000;
+const MAX_RUNS = 10;
+
+const emptyTestCase = () => ({
+    status: TEST_STATUSES.UNTESTED,
+    notes: '',
+    runs: [],
+    updatedAt: null
+});
+
 /**
- * Get the test case data for a specific issue
+ * Resolve the storage key from the trusted Forge context.
+ * The issue id is never taken from the client payload, so users can only
+ * change the test case of the issue they are currently viewing.
  * Key format: testcase:{issueId}
  */
-resolver.define('getTestCase', async ({ payload, context }) => {
-    const { issueId } = payload;
-    const accountId = context.accountId;
-
-    if (!issueId) {
-        return { success: false, error: 'Missing issueId' };
+function getScope(context) {
+    // context.license is only present for paid apps in production
+    if (context.license && context.license.active === false) {
+        return { error: 'unlicensed' };
     }
 
-    const key = `testcase:${issueId}`;
+    const issueId = context.extension?.issue?.id;
+    if (!issueId) {
+        return { error: 'Missing issue context' };
+    }
+
+    return { key: `testcase:${issueId}` };
+}
+
+function readNotes(payload) {
+    const notes = typeof payload?.notes === 'string' ? payload.notes : '';
+    return notes.slice(0, MAX_NOTES_LENGTH);
+}
+
+/**
+ * Drop fields written by older versions that stored Atlassian account ids
+ */
+function sanitize(testCase) {
+    const { status, notes, runs, updatedAt } = { ...emptyTestCase(), ...testCase };
+    return {
+        status,
+        notes,
+        updatedAt,
+        runs: (runs || []).map(({ status, notes, timestamp }) => ({ status, notes, timestamp }))
+    };
+}
+
+/**
+ * Get the test case data for the current issue
+ */
+resolver.define('getTestCase', async ({ context }) => {
+    const { key, error } = getScope(context);
+    if (error) {
+        return { success: false, error };
+    }
 
     try {
-        const testCase = await storage.get(key);
+        const testCase = await kvs.get(key);
         return {
             success: true,
-            testCase: testCase || {
-                status: TEST_STATUSES.UNTESTED,
-                notes: '',
-                runs: [],
-                updatedAt: null,
-                updatedBy: null
-            }
+            testCase: testCase ? sanitize(testCase) : emptyTestCase()
         };
-    } catch (error) {
-        console.error('Error fetching test case:', error);
+    } catch (err) {
+        console.error('Error fetching test case');
         return { success: false, error: 'Failed to fetch test case' };
     }
 });
@@ -50,56 +87,32 @@ resolver.define('getTestCase', async ({ payload, context }) => {
  * Update test case status
  */
 resolver.define('updateStatus', async ({ payload, context }) => {
-    const { issueId, status, notes } = payload;
-    const accountId = context.accountId;
-
-    if (!issueId || !status) {
-        return { success: false, error: 'Missing issueId or status' };
+    const { key, error } = getScope(context);
+    if (error) {
+        return { success: false, error };
     }
 
-    // Validate status
+    const status = payload?.status;
     if (!Object.values(TEST_STATUSES).includes(status)) {
         return { success: false, error: 'Invalid status' };
     }
 
-    const key = `testcase:${issueId}`;
-
     try {
-        // Get existing data
-        const existing = await storage.get(key) || {
-            status: TEST_STATUSES.UNTESTED,
-            notes: '',
-            runs: []
-        };
+        const existing = sanitize(await kvs.get(key));
+        const notes = readNotes(payload);
+        const timestamp = new Date().toISOString();
 
-        // Create new run record
-        const newRun = {
-            status,
-            notes: notes || '',
-            tester: accountId,
-            timestamp: new Date().toISOString()
-        };
-
-        // Keep only last 10 runs
-        const runs = [newRun, ...(existing.runs || [])].slice(0, 10);
-
-        // Update test case
         const updatedTestCase = {
             status,
             notes: notes || existing.notes,
-            runs,
-            updatedAt: new Date().toISOString(),
-            updatedBy: accountId
+            runs: [{ status, notes, timestamp }, ...existing.runs].slice(0, MAX_RUNS),
+            updatedAt: timestamp
         };
 
-        await storage.set(key, updatedTestCase);
-
-        return {
-            success: true,
-            testCase: updatedTestCase
-        };
-    } catch (error) {
-        console.error('Error updating test case:', error);
+        await kvs.set(key, updatedTestCase);
+        return { success: true, testCase: updatedTestCase };
+    } catch (err) {
+        console.error('Error updating test case');
         return { success: false, error: 'Failed to update test case' };
     }
 });
@@ -108,37 +121,23 @@ resolver.define('updateStatus', async ({ payload, context }) => {
  * Update test case notes only (without changing status)
  */
 resolver.define('updateNotes', async ({ payload, context }) => {
-    const { issueId, notes } = payload;
-    const accountId = context.accountId;
-
-    if (!issueId) {
-        return { success: false, error: 'Missing issueId' };
+    const { key, error } = getScope(context);
+    if (error) {
+        return { success: false, error };
     }
 
-    const key = `testcase:${issueId}`;
-
     try {
-        const existing = await storage.get(key) || {
-            status: TEST_STATUSES.UNTESTED,
-            notes: '',
-            runs: []
-        };
-
+        const existing = sanitize(await kvs.get(key));
         const updatedTestCase = {
             ...existing,
-            notes: notes || '',
-            updatedAt: new Date().toISOString(),
-            updatedBy: accountId
+            notes: readNotes(payload),
+            updatedAt: new Date().toISOString()
         };
 
-        await storage.set(key, updatedTestCase);
-
-        return {
-            success: true,
-            testCase: updatedTestCase
-        };
-    } catch (error) {
-        console.error('Error updating notes:', error);
+        await kvs.set(key, updatedTestCase);
+        return { success: true, testCase: updatedTestCase };
+    } catch (err) {
+        console.error('Error updating notes');
         return { success: false, error: 'Failed to update notes' };
     }
 });
@@ -146,45 +145,30 @@ resolver.define('updateNotes', async ({ payload, context }) => {
 /**
  * Reset test case to untested
  */
-resolver.define('resetTestCase', async ({ payload, context }) => {
-    const { issueId } = payload;
-    const accountId = context.accountId;
-
-    if (!issueId) {
-        return { success: false, error: 'Missing issueId' };
+resolver.define('resetTestCase', async ({ context }) => {
+    const { key, error } = getScope(context);
+    if (error) {
+        return { success: false, error };
     }
 
-    const key = `testcase:${issueId}`;
-
     try {
-        const existing = await storage.get(key);
-
-        // Add reset to history
-        const resetRun = {
-            status: TEST_STATUSES.UNTESTED,
-            notes: 'Test case reset',
-            tester: accountId,
-            timestamp: new Date().toISOString()
-        };
-
-        const runs = existing ? [resetRun, ...(existing.runs || [])].slice(0, 10) : [resetRun];
+        const existing = sanitize(await kvs.get(key));
+        const timestamp = new Date().toISOString();
 
         const resetTestCase = {
             status: TEST_STATUSES.UNTESTED,
             notes: '',
-            runs,
-            updatedAt: new Date().toISOString(),
-            updatedBy: accountId
+            runs: [
+                { status: TEST_STATUSES.UNTESTED, notes: 'Test case reset', timestamp },
+                ...existing.runs
+            ].slice(0, MAX_RUNS),
+            updatedAt: timestamp
         };
 
-        await storage.set(key, resetTestCase);
-
-        return {
-            success: true,
-            testCase: resetTestCase
-        };
-    } catch (error) {
-        console.error('Error resetting test case:', error);
+        await kvs.set(key, resetTestCase);
+        return { success: true, testCase: resetTestCase };
+    } catch (err) {
+        console.error('Error resetting test case');
         return { success: false, error: 'Failed to reset test case' };
     }
 });

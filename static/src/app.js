@@ -1,6 +1,6 @@
 /**
  * Quick Test Management for Jira - Frontend Application
- * v2.7.0 - Instant UI responsiveness with async backend saves
+ * v3.0.0 - Forge KVS storage, context-scoped resolvers, license awareness
  */
 
 import { invoke, view } from '@forge/bridge';
@@ -15,6 +15,8 @@ const STATUS_CONFIG = {
     in_progress: { icon: '🔄', text: 'Testing in Progress', label: 'In Progress' }
 };
 
+const UNLICENSED_MESSAGE = 'Your Quick Test Management license is not active. Ask a Jira admin to renew it in Manage apps.';
+
 // State
 let currentIssueId = null;
 let currentStatus = 'untested';
@@ -28,7 +30,6 @@ const elements = {};
  * Initialize the application
  */
 async function init() {
-    console.log('[QuickTest] Initializing v2.7.0...');
     cacheElements();
     setupEventListeners();
 
@@ -45,7 +46,7 @@ async function init() {
         showMainContent();
     } catch (error) {
         console.error('[QuickTest] Init error:', error);
-        showError('Failed to initialize');
+        showError(error.message === UNLICENSED_MESSAGE ? UNLICENSED_MESSAGE : 'Failed to initialize');
     }
 }
 
@@ -99,13 +100,17 @@ function setupEventListeners() {
  */
 async function loadTestCase() {
     try {
-        const response = await invoke('getTestCase', { issueId: currentIssueId });
+        const response = await invoke('getTestCase');
+        if (response?.error === 'unlicensed') {
+            throw new Error(UNLICENSED_MESSAGE);
+        }
         if (response?.success && response.testCase) {
             updateUI(response.testCase);
         } else {
             updateUI({ status: 'untested', notes: '', runs: [] });
         }
     } catch (error) {
+        if (error.message === UNLICENSED_MESSAGE) throw error;
         console.error('[QuickTest] Load error:', error);
         updateUI({ status: 'untested', notes: '', runs: [] });
     }
@@ -187,7 +192,6 @@ async function saveStatusToBackend(saveRequest) {
     try {
         const notes = elements.testNotes?.value || '';
         const response = await invoke('updateStatus', {
-            issueId: currentIssueId,
             status: saveRequest.status,
             notes
         });
@@ -226,10 +230,7 @@ function handleNotesInput() {
 
         try {
             const notes = elements.testNotes?.value || '';
-            const response = await invoke('updateNotes', {
-                issueId: currentIssueId,
-                notes
-            });
+            const response = await invoke('updateNotes', { notes });
 
             if (response?.success) {
                 showSaveIndicator('saved', '✓ Saved');
@@ -261,7 +262,7 @@ async function resetTestCase() {
     showSaveIndicator('saving', 'Resetting...');
 
     try {
-        const response = await invoke('resetTestCase', { issueId: currentIssueId });
+        const response = await invoke('resetTestCase');
 
         if (response?.success) {
             if (response.testCase) updateUI(response.testCase);

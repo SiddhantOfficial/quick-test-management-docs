@@ -12,9 +12,9 @@
     "license": "ISC",
     "type": "commonjs",
     "dependencies": {
-        "@forge/bridge": "^5.10.1"
+        "@forge/bridge": "^7.0.0"
     },
     "devDependencies": {
-        "esbuild": "^0.27.2"
+        "esbuild": "^0.28.2"
     }
 }

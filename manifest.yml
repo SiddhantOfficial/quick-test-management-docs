@@ -3,7 +3,7 @@ modules:
     - key: quick-test-cases-panel
       title: Quick Test Management
       label: Test Status
-      icon: https://developer.atlassian.com/platform/forge/images/icons/issue-panel-icon.svg
+      icon: resource:main;icon.svg
       resource: main
       resolver:
         function: resolver
@@ -19,15 +19,10 @@ resources:
 permissions:
   scopes:
     - storage:app
-  content:
-    styles:
-      - 'unsafe-inline'
-    scripts:
-      - 'unsafe-inline'
 
 app:
   runtime:
     name: nodejs22.x
-  id: ari:cloud:ecosystem::app/f747b6ce-539e-4ecb-821f-4439e5ee22b9
+  id: ari:cloud:ecosystem::app/76345be7-d1b6-47ec-95b2-fee02e6c63cd
   licensing:
     enabled: true

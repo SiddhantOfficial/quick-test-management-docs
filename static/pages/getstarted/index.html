@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get started with Quick Test Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main class="page">
+        <h1>Get started with Quick Test Management</h1>
+        <p>Record Pass, Fail, Blocked or In progress on any Jira issue, with notes and a history of recent runs. No setup is needed; the app works as soon as it's installed.</p>
+
+        <h2>For your team</h2>
+        <ol>
+            <li>Open any issue and find the <strong>Test Status</strong> panel in the issue's right-hand details area.</li>
+            <li>Click <strong>Pass</strong>, <strong>Fail</strong>, <strong>Blocked</strong> or <strong>Testing</strong>. Add notes such as steps to reproduce; they save automatically.</li>
+            <li>Open <strong>Test History</strong> in the panel to see the last 10 runs.</li>
+        </ol>
+
+        <h2>Find issues by test result</h2>
+        <p>Every result is searchable in Jira search, filters and dashboards:</p>
+        <ul>
+            <li><code>testStatus = failed</code>: all failing issues</li>
+            <li><code>testStatus in (failed, blocked) AND sprint in openSprints()</code>: what's blocking this sprint</li>
+            <li><code>testStatusUpdated &gt;= -7d</code>: results recorded in the last week</li>
+        </ul>
+        <p>Values are <code>passed</code>, <code>failed</code>, <code>blocked</code>, <code>in_progress</code> and <code>untested</code>. Issues are searchable once a result has been recorded on them.</p>
+
+        <h2>Permissions</h2>
+        <ul>
+            <li>Anyone who can view an issue can see its test results.</li>
+            <li>Recording or resetting results needs the <strong>Edit issues</strong> project permission, so your existing Jira permission schemes apply.</li>
+        </ul>
+
+        <h2>Privacy</h2>
+        <p>Results and notes are stored in Atlassian's Forge storage and as a Jira issue property. The app sends no data outside Atlassian and stores no personal data.</p>
+
+        <div class="callout">
+            Need help? See the <a href="https://quicktestmanagementdocs.technicaldost.com/">documentation</a>
+            or email <a href="mailto:support@technicaldost.com">support@technicaldost.com</a>.
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

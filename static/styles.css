@@ -1,46 +1,48 @@
-/* Quick Test Cases - Light Theme (Matches Jira UI) */
+/* Quick Test Management - follows the Jira light/dark theme */
 
 
 :root {
-    /* Jira-matching light palette */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7f8f9;
-    --bg-tertiary: #ebecf0;
-    --bg-hover: #dfe1e6;
+    /* Atlassian design tokens (follow Jira light/dark theme); second value is the light fallback */
+    --bg-primary: var(--ds-surface, #ffffff);
+    --bg-secondary: var(--ds-background-neutral-subtle-hovered, #f7f8f9);
+    --bg-tertiary: var(--ds-background-neutral, #ebecf0);
+    --bg-hover: var(--ds-background-neutral-hovered, #dfe1e6);
 
-    --text-primary: #172b4d;
-    --text-secondary: #5e6c84;
-    --text-muted: #97a0af;
+    --text-primary: var(--ds-text, #172b4d);
+    --text-secondary: var(--ds-text-subtle, #5e6c84);
+    --text-muted: var(--ds-text-subtlest, #97a0af);
 
-    /* Status colors - Jira style */
-    --pass: #36b37e;
-    --pass-bg: #e3fcef;
-    --pass-border: #79f2c0;
+    /* Status colors */
+    --pass: var(--ds-icon-success, #36b37e);
+    --pass-bg: var(--ds-background-success, #e3fcef);
+    --pass-border: var(--ds-border-success, #79f2c0);
 
-    --fail: #ff5630;
-    --fail-bg: #ffebe6;
-    --fail-border: #ffbdad;
+    --fail: var(--ds-icon-danger, #ff5630);
+    --fail-bg: var(--ds-background-danger, #ffebe6);
+    --fail-border: var(--ds-border-danger, #ffbdad);
 
-    --blocked: #ff991f;
-    --blocked-bg: #fff7e6;
-    --blocked-border: #ffe380;
+    --blocked: var(--ds-icon-warning, #ff991f);
+    --blocked-bg: var(--ds-background-warning, #fff7e6);
+    --blocked-border: var(--ds-border-warning, #ffe380);
 
-    --progress: #0065ff;
-    --progress-bg: #deebff;
-    --progress-border: #b3d4ff;
+    --progress: var(--ds-icon-information, #0065ff);
+    --progress-bg: var(--ds-background-information, #deebff);
+    --progress-border: var(--ds-border-information, #b3d4ff);
 
-    --neutral: #97a0af;
-    --neutral-bg: #f4f5f7;
+    --neutral: var(--ds-icon-subtle, #97a0af);
+    --neutral-bg: var(--ds-background-neutral, #f4f5f7);
 
     /* Accent */
-    --accent: #0052cc;
-    --accent-hover: #0065ff;
+    --accent: var(--ds-background-brand-bold, #0052cc);
+    --accent-hover: var(--ds-background-brand-bold-hovered, #0065ff);
+    --text-inverse: var(--ds-text-inverse, #ffffff);
+    --focus: var(--ds-border-focused, #388bff);
 
     /* Effects */
     --border-radius: 8px;
     --border-radius-sm: 6px;
-    --shadow-sm: 0 1px 2px rgba(9, 30, 66, 0.08);
-    --shadow: 0 4px 12px rgba(9, 30, 66, 0.12);
+    --shadow-sm: var(--ds-shadow-raised, 0 1px 2px rgba(9, 30, 66, 0.08));
+    --shadow: var(--ds-shadow-overlay, 0 4px 12px rgba(9, 30, 66, 0.12));
     --transition: all 0.15s ease;
 }
 
@@ -52,7 +54,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg-primary);
+    background: transparent;
     color: var(--text-primary);
     font-size: 14px;
     line-height: 1.5;
@@ -262,7 +264,7 @@ body {
 .notes-input:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.1);
+    box-shadow: 0 0 0 2px var(--focus);
 }
 
 .notes-input::placeholder {
@@ -468,7 +470,7 @@ body {
     background: var(--accent);
     border: none;
     border-radius: var(--border-radius-sm);
-    color: white;
+    color: var(--text-inverse);
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
@@ -503,4 +505,97 @@ body {
 #main-content,
 #error-state {
     display: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+
+.action-btn:disabled,
+.reset-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.notes-input:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.permission-note,
+.jql-hint {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.jql-hint code {
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--bg-tertiary);
+    font-family: SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- Get started page ---------- */
+
+.page {
+    max-width: 880px;
+    padding: 24px 32px 48px;
+}
+
+.page h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.page h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 24px 0 8px;
+}
+
+.page p,
+.page li {
+    color: var(--text-secondary);
+}
+
+.page ol,
+.page ul {
+    padding-left: 20px;
+}
+
+.page li {
+    margin-bottom: 6px;
+}
+
+.page code {
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--bg-tertiary);
+    font-family: SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 13px;
+}
+
+.page a {
+    color: var(--ds-link, #0c66e4);
+}
+
+.callout {
+    padding: 12px 16px;
+    margin: 16px 0;
+    border-radius: 3px;
+    background: var(--progress-bg);
+    color: var(--text-primary);
 }

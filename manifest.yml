@@ -3,22 +3,44 @@ modules:
     - key: quick-test-cases-panel
       title: Quick Test Management
       label: Test Status
-      icon: resource:main;icon.svg
-      resource: main
+      icon: resource:panel;icon.svg
+      resource: panel
       resolver:
         function: resolver
+
+  jira:adminPage:
+    - key: quick-test-get-started
+      title: Quick Test Management
+      resource: getstarted
+      useAsGetStarted: true
+
+  jira:entityProperty:
+    - key: quick-test-status-index
+      entityType: issue
+      propertyKey: quick-test-status
+      values:
+        - path: status
+          type: string
+          searchAlias: testStatus
+        - path: updatedAt
+          type: date
+          searchAlias: testStatusUpdated
 
   function:
     - key: resolver
       handler: index.handler
 
 resources:
-  - key: main
-    path: static
+  - key: panel
+    path: static/build/panel
+  - key: getstarted
+    path: static/build/getstarted
 
 permissions:
   scopes:
     - storage:app
+    - read:jira-work
+    - write:jira-work
 
 app:
   runtime:

@@ -4,7 +4,7 @@
     "description": "Quick Test Management for Jira - Frontend",
     "main": "app.js",
     "scripts": {
-        "build": "esbuild src/app.js --bundle --outfile=app.js --format=iife --target=es2020",
+        "build": "node build.mjs",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],

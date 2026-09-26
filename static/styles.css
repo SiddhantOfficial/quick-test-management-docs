@@ -531,6 +531,7 @@ body {
 }
 
 .jql-hint code {
+    white-space: nowrap;
     padding: 1px 4px;
     border-radius: 3px;
     background: var(--bg-tertiary);
@@ -551,7 +552,7 @@ body {
 
 .page {
     max-width: 880px;
-    padding: 24px 32px 48px;
+    padding: 8px 0 48px;
 }
 
 .page h1 {

@@ -57,6 +57,7 @@ async function canEditIssue(issueId) {
         route`/rest/api/3/mypermissions?issueId=${issueId}&permissions=EDIT_ISSUES`
     );
     if (!response.ok) {
+        console.warn(`Permission check failed with HTTP ${response.status}`);
         return false;
     }
     const body = await response.json();
@@ -68,12 +69,15 @@ async function canEditIssue(issueId) {
  * Written as the user, so Jira enforces their permissions as well.
  */
 async function setStatusProperty(issueId, status, updatedAt) {
+    // Jira only indexes ISO 8601 date-times without milliseconds
+    // (e.g. 2026-09-26T20:55:27Z), so drop the ".SSS" from toISOString()
+    const indexedDate = updatedAt.replace(/\.\d+Z$/, 'Z');
     const response = await api.asUser().requestJira(
         route`/rest/api/3/issue/${issueId}/properties/${STATUS_PROPERTY}`,
         {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status, updatedAt })
+            body: JSON.stringify({ status, updatedAt: indexedDate })
         }
     );
     if (!response.ok) {

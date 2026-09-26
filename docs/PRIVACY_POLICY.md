@@ -95,7 +95,7 @@ We may update this Privacy Policy from time to time. We will notify users of any
 
 If you have any questions about this Privacy Policy or our data practices, please contact us at:
 
-**Email:** quicktestcases.support@gmail.com
+**Email:** support@technicaldost.com
 
 ---
 

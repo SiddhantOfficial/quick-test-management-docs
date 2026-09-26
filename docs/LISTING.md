@@ -88,7 +88,7 @@ Enterprise test management tools like Zephyr and Xray are powerful but overkill 
 
 ## Support
 - **Documentation:** https://docs.technicaldost.com/quick-test-cases/
-- **Support Email:** quicktestcases.support@gmail.com
+- **Support Email:** support@technicaldost.com
 - **Issue Tracker:** GitHub Issues
 
 ---
